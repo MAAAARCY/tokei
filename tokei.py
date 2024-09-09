@@ -61,8 +61,8 @@ while True:
     seconds = now.second
     
     # 角度を計算（12時を基準に反時計回りが正の方向）
-    hour_angle = (hours) * 30 #1時間あたり30度
-    minute_angle = (minutes) * 6  # 1分あたり6度
+    hour_angle = (hours + minutes / 60) * 30 #1時間あたり30度
+    minute_angle = (minutes + minutes / 60) * 6  # 1分あたり6度
     second_angle = seconds * 6  # 1秒あたり6度
 
     # 時計の針を描画
