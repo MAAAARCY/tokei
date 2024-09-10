@@ -32,13 +32,20 @@ clock = pygame.time.Clock()
 fps = 60
 
 # 時計のテクスチャ
-circleTokei = pygame.image.load("images/tokei.png")
+circle_tokei = pygame.image.load("images/tokei.png")
+second_hand_img = pygame.image.load("images/hand.png")
+minute_hand_img = pygame.image.load("images/hand.png")
+hour_hand_img = pygame.image.load("images/hand.png")
+
+hour_hand_img = pygame.transform.scale(hour_hand_img, (HOUR_HAND_LENGTH // 2, HOUR_HAND_LENGTH*2))
+minute_hand_img = pygame.transform.scale(minute_hand_img, (MINUTE_HAND_LENGTH // 2, MINUTE_HAND_LENGTH*2))
+second_hand_img = pygame.transform.scale(second_hand_img, (SECOND_HAND_LENGTH // 2, SECOND_HAND_LENGTH*2))
 
 # 時計の針を描画する関数
-def draw_hand(angle, length, color):
-    end_x = CENTER[0] - length * math.cos(math.radians(angle + 90))
-    end_y = CENTER[1] - length * math.sin(math.radians(angle + 90))
-    pygame.draw.line(screen, color, CENTER, (end_x, end_y), 3)
+def draw_hand(image, angle):
+    rotated_image = pygame.transform.rotate(image, -angle)
+    new_rect = rotated_image.get_rect(center=CENTER)
+    screen.blit(rotated_image, new_rect)
 
 # メインループ
 while True:
@@ -51,8 +58,7 @@ while True:
     screen.fill(WHITE)
 
     # 時計の外円を描画
-    pygame.draw.circle(screen, BLACK, CENTER, RADIUS, 3)
-    #screen.blit(circleTokei, (WIDTH // 2 - 227, HEIGHT // 2 - 170))
+    screen.blit(circle_tokei, (WIDTH // 2 - 227, HEIGHT // 2 - 170))
 
     # 現在の時刻を取得
     now = datetime.datetime.now()
@@ -61,14 +67,14 @@ while True:
     seconds = now.second
     
     # 角度を計算（12時を基準に反時計回りが正の方向）
-    hour_angle = (hours + minutes / 60) * 30 #1時間あたり30度
-    minute_angle = (minutes + minutes / 60) * 6  # 1分あたり6度
+    hour_angle = (hours + minutes / 60) * 30  # 1時間あたり30度
+    minute_angle = (minutes + seconds / 60) * 6  # 1分あたり6度
     second_angle = seconds * 6  # 1秒あたり6度
 
     # 時計の針を描画
-    draw_hand(hour_angle, HOUR_HAND_LENGTH, BLUE)
-    draw_hand(minute_angle, MINUTE_HAND_LENGTH, GREEN)
-    draw_hand(second_angle, SECOND_HAND_LENGTH, RED)
+    draw_hand(hour_hand_img, hour_angle)
+    draw_hand(minute_hand_img, minute_angle)
+    draw_hand(second_hand_img, second_angle)
 
     # 画面の更新
     pygame.display.update()
