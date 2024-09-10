@@ -33,13 +33,13 @@ fps = 60
 
 # 時計のテクスチャ
 circle_tokei = pygame.image.load("images/tokei.png")
-second_hand_img = pygame.image.load("images/hand.png")
-minute_hand_img = pygame.image.load("images/hand.png")
-hour_hand_img = pygame.image.load("images/hand.png")
+second_hand_img = pygame.image.load("images/second_hand.png")
+minute_hand_img = pygame.image.load("images/hand_1.png")
+hour_hand_img = pygame.image.load("images/hand_1.png")
 
 hour_hand_img = pygame.transform.scale(hour_hand_img, (HOUR_HAND_LENGTH // 2, HOUR_HAND_LENGTH*2))
 minute_hand_img = pygame.transform.scale(minute_hand_img, (MINUTE_HAND_LENGTH // 2, MINUTE_HAND_LENGTH*2))
-second_hand_img = pygame.transform.scale(second_hand_img, (SECOND_HAND_LENGTH // 2, SECOND_HAND_LENGTH*2))
+second_hand_img = pygame.transform.scale(second_hand_img, (4, SECOND_HAND_LENGTH*2))
 
 # 時計の針を描画する関数
 def draw_hand(image, angle):
