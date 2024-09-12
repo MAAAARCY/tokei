@@ -1,7 +1,27 @@
 import pygame
-import math
 import datetime
+import zoneinfo
 import sys
+
+
+# 色の定義
+WHITE = (255, 255, 255) #白
+BLACK = (0, 0, 0) #黒
+RED = (255, 0, 0) #赤
+GREEN = (0, 255, 0) #緑
+BLUE = (0, 0, 255) #青
+
+"""
+タイムゾーンの設定
+"""
+
+# タイムゾーン選択
+timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London"}
+region = input("どの地域の時計を表示しますか？") or "東京"
+
+"""
+時計の設定
+"""
 
 # Pygameの初期化
 pygame.init()
@@ -10,13 +30,6 @@ pygame.init()
 WIDTH, HEIGHT = 400, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("針時計")
-
-# 色の定義
-WHITE = (255, 255, 255) #白
-BLACK = (0, 0, 0) #黒
-RED = (255, 0, 0) #赤
-GREEN = (0, 255, 0) #緑
-BLUE = (0, 0, 255) #青
 
 # 時計の中心点と半径
 CENTER = (WIDTH // 2, HEIGHT // 2)
@@ -47,6 +60,23 @@ def draw_hand(image, angle):
     new_rect = rotated_image.get_rect(center=CENTER)
     screen.blit(rotated_image, new_rect)
 
+"""
+フォントとテキスト描画の設定
+"""
+
+# フォントの設定（デフォルトフォント、サイズは30）
+default_font = pygame.font.Font('NotoSansJP-Black.otf', 20)
+region_text_font = pygame.font.Font('NotoSansJP-Black.otf', 20)
+
+# テキストを描画する関数
+def draw_text(text, pos, font=default_font, color=BLACK):
+    rendered_text = font.render(text, True, color)
+    screen.blit(rendered_text, pos)
+
+"""
+以下本文
+"""
+
 # メインループ
 while True:
     for event in pygame.event.get():
@@ -61,7 +91,7 @@ while True:
     screen.blit(circle_tokei, (WIDTH // 2 - 227, HEIGHT // 2 - 170))
 
     # 現在の時刻を取得
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(zoneinfo.ZoneInfo(timezones[region]))
     hours = now.hour
     minutes = now.minute
     seconds = now.second
@@ -75,6 +105,8 @@ while True:
     draw_hand(hour_hand_img, hour_angle)
     draw_hand(minute_hand_img, minute_angle)
     draw_hand(second_hand_img, second_angle)
+
+    draw_text(region, (0, 0), region_text_font)
 
     # 画面の更新
     pygame.display.update()
