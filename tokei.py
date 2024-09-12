@@ -16,7 +16,7 @@ BLUE = (0, 0, 255) #青
 """
 
 # タイムゾーン選択
-timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London"}
+timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London", "ハワイ":"US/Hawaii"}
 region = input("どの地域の時計を表示しますか？") or "東京"
 
 """
