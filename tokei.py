@@ -16,7 +16,7 @@ BLUE = (0, 0, 255) #青
 """
 
 # タイムゾーン選択
-timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London", "ハワイ":"US/Hawaii"}
+timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London", "ハワイ":"America/Anchorage"}
 region = ""
 
 while True:
