@@ -17,14 +17,12 @@ print(f"ページタイトル: {title}")
 
 # 例: 特定のクラスを持つ要素を取得
 elements = soup.find_all(class_='TableStyle-H_Basic-Body-Body1')
-timezones = []
+timezones = dict()
 
 ct = 0
 for element in elements:
     timezone_info = element.text.splitlines()
-    print(timezone_info[5])
-    print(timezone_info[8])
-    timezones.append({timezone_info[8]:timezone_info[5]})
+    timezones[timezone_info[8].replace(' ', '')] = timezone_info[5]
 
 with open('timezones.json', 'w', encoding="utf-8") as file:
     json.dump(timezones, file, ensure_ascii=False, indent=4) 
