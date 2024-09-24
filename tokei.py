@@ -1,6 +1,7 @@
 import pygame
 import datetime
 import zoneinfo
+import json
 import sys
 
 
@@ -16,11 +17,14 @@ BLUE = (0, 0, 255) #青
 """
 
 # タイムゾーン選択
-timezones = {"東京":"Asia/Tokyo", "ロサンゼルス":"America/Los_Angeles", "ロンドン":"Europe/London", "ハワイ":"US/Hawaii"}
+timezones = dict()
 region = ""
 
+with open("timezones.json", "r", encoding="utf-8") as file:
+	timezones = json.load(file)
+
 while True:
-    region = input("どの地域の時計を表示しますか？") or "東京"
+    region = input("タイムゾーンを選択してください：") or "東京"
     if not timezones.get(region):
         print(region + "は登録されていません")
     else:
